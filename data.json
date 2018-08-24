@@ -1,0 +1,26 @@
+[
+  {
+    "cpu": "Intel Xeon E5-1650v4 3.6 ГГц",
+    "hdd": 512,
+    "ram": 128,
+    "price": 1200000
+  },
+  {
+    "cpu": "Intel Xeon E3-1230v5 3.4 ГГц",
+    "hdd": 128,
+    "ram": 16,
+    "price": 690000
+  },
+  {
+    "cpu": "Intel Xeon E3-1230 3.4 ГГц",
+    "hdd": 256,
+    "ram": 32,
+    "price": 750000
+  },
+  {
+    "cpu": "Intel Xeon E3-1270v5 3.6 ГГц",
+    "hdd": 256,
+    "ram": 64,
+    "price": 990000
+  }
+]

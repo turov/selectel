@@ -1,0 +1,1 @@
+{"version":3,"sources":["includes/_main.styl","assets.css"],"names":[],"mappings":"AAAA;EACE,iBAAA;CCCD;ADAD;EACE,YAAA;CCED","file":"style.css","sourcesContent":["body\n  background #ccc\nh1\n  color red  \n","body {\n  background: #ccc;\n}\nh1 {\n  color: #f00;\n}\n"]}

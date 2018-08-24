@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+<button onclick="loadPhones()" id="button">Загрузить phones.json!</button>
+
+<div class="container"></div>
+
+
+<template>
+  <div class="server">
+    <span class="server__cpu"></span>
+    <span class="server__hdd"></span>
+    <span class="server__price"></span>
+    <span class="server__ram"></span>
+  </div>
+</template>
+
+
+<!--<script>-->
+
+  <!--function loadPhones() {-->
+
+    <!--var container = document.querySelector('.container');-->
+    <!--var data = [];-->
+    <!--var xhr = new XMLHttpRequest();-->
+
+    <!--xhr.open('GET', 'data.json', true);-->
+
+    <!--xhr.onreadystatechange = function () {-->
+      <!--if (xhr.readyState != 4) return;-->
+
+      <!--button.parentNode.removeChild(button);-->
+
+      <!--if (xhr.status != 200) {-->
+        <!--// обработать ошибку-->
+        <!--alert(xhr.status + ': ' + xhr.statusText);-->
+      <!--} else {-->
+        <!--try {-->
+          <!--var phones = JSON.parse(xhr.responseText);-->
+        <!--} catch (e) {-->
+          <!--alert("Некорректный ответ " + e.message);-->
+        <!--}-->
+        <!--showPhones(phones);-->
+      <!--}-->
+
+    <!--};-->
+
+    <!--xhr.send();-->
+
+    <!--button.innerHTML = 'Загружаю...';-->
+    <!--button.disabled = true;-->
+  <!--}-->
+
+  <!--function showPhones(phones) {-->
+    <!--data = phones.slice();-->
+    <!--data.forEach(function (item, i) {-->
+      <!--data[i].id = i;-->
+    <!--});-->
+    <!--console.log(data[2]);-->
+  <!--}-->
+
+  <!--var create = function (info) {-->
+    <!--var template = document.querySelector('template');-->
+    <!--var server = template.content.querySelector('.server');-->
+    <!--var element = server.cloneNode(true);-->
+    <!--element.querySelector('.server__cpu').textContent = info.cpu;-->
+    <!--element.querySelector('.server__hdd').textContent = info.hdd;-->
+    <!--element.querySelector('.server__price').textContent = info.price;-->
+    <!--element.querySelector('.server__ram').textContent = info.ram;-->
+    <!--return element;-->
+  <!--};-->
+
+
+<!--</script>-->
+
+<script src="script.js"></script>
+
+</body>
+</html>
