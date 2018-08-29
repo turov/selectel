@@ -15,7 +15,7 @@ gulp.task('html', function () {
   gulp.src('source/pug/index.pug')
     .pipe(plumber())
     .pipe(pug())
-    .pipe(gulp.dest('source'))
+    .pipe(gulp.dest('build'))
 });
 
 gulp.task('style', function () {
@@ -23,10 +23,10 @@ gulp.task('style', function () {
     .pipe(plumber())
     .pipe(stylus())
     .pipe(autoprefixer())
-    .pipe(gulp.dest('source/css'))
+    .pipe(gulp.dest('build/css'))
     .pipe(cssmin())
     .pipe(rename('style.min.css'))
-    .pipe(gulp.dest("source/css"));
+    .pipe(gulp.dest("build/css"));
 });
 
 gulp.task('images', function () {
@@ -36,13 +36,13 @@ gulp.task('images', function () {
       imagemin.jpegtran({progressive: true}),
       imagemin.svgo()
     ]))
-    .pipe(gulp.dest('source/img'));
+    .pipe(gulp.dest('build/img'));
 });
 
 gulp.task('jsmin', function () {
   gulp.src('source/js/*.js')
     .pipe(jsmin())
-    .pipe(gulp.dest('source/js'))
+    .pipe(gulp.dest('build/js'))
 });
 
 gulp.task('del-min', function () {
@@ -58,9 +58,9 @@ gulp.task('stylus-watch', ['style'], function (done) {
   done();
 });
 
-gulp.task('serve', ['html', 'style'], function () {
+gulp.task('serve', ['html', 'style', 'images', 'jsmin'], function () {
   server.init({
-    server: 'source/'
+    server: 'build/'
   });
 
   gulp.watch('source/stylus/**/*.styl', ['stylus-watch']);
@@ -71,32 +71,19 @@ gulp.task('clean', function () {
   return del('build');
 });
 
-gulp.task("copy", function () {
-  return gulp.src([
-    'source/*.html',
-    'source/img/**',
-    'source/css/**',
-    'source/js/*.js'
-  ], {
-    base: "source"
-  })
-    .pipe(gulp.dest("build"));
-});
-
 gulp.task('build', function (done) {
   run(
     'clean',
     'html',
     'style',
-    'del-min',
+    'images',
     'jsmin',
-    'copy',
     done
   )
   ;
 });
 
-gulp.task('gh-pages', function () {b
+gulp.task('gh-pages', function () {
   gulp.src('build/**/*')
     .pipe(plumber())
     .pipe(gulp.dest('docs'))
