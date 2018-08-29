@@ -245,7 +245,7 @@ html {
   min-height: 24px;
   padding-right: 34px;
   opacity: 1;
-  transition: opacity 0.3 ease;
+  transition: opacity 0.3s ease;
   outline: none;
 }
 @media screen and (min-width: 1168px) {
@@ -287,7 +287,7 @@ html {
 .logo {
   outline: none;
   opacity: 1;
-  transition: opacity 0.3 ease;
+  transition: opacity 0.3s ease;
 }
 .logo:hover {
   opacity: 0.6;
@@ -323,7 +323,7 @@ html {
   height: 100%;
   opacity: 0;
   z-index: 1;
-  transition: opacity 0.3 ease;
+  transition: opacity 0.3s ease;
 }
 @media screen and (min-width: 1168px) {
   .slide {
@@ -635,7 +635,7 @@ html {
   width: 32px;
   height: 24px;
   opacity: 1;
-  transition: opacity 0.3 ease;
+  transition: opacity 0.3s ease;
   outline: none;
 }
 .social__link:hover {
