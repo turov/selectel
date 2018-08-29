@@ -7,7 +7,7 @@ Thumbs.db
 desktop.ini
 node_modules
 prepros-6.config
-.idea
+.idea/
 .vscode
 *.ai
 *.log
