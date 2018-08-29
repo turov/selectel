@@ -1,0 +1,67 @@
+.header
+  width 100%
+  position absolute
+  top: 0
+  left 50%
+  z-index 4
+  transform translateX(-50%)
+  background transparent
+  transition background 0.6s ease
+
+  @media screen and (min-width: 1168px)
+    position fixed
+
+
+.header__wrapper
+  display flex
+  flex-direction row
+  justify-content space-between
+  align-items center
+  padding 40px 5%
+
+  @media screen and (min-width: 1168px)
+    width 1168px
+    padding 40px 16px
+    margin 0 auto
+
+.header__tel
+  position relative
+  text-decoration none
+  font-size: 0
+  line-height 0
+  min-height 24px
+  padding-right 34px
+  opacity 1
+  transition $transition
+  outline none
+
+  @media screen and (min-width: 1168px)
+    position relative
+    text-decoration none
+    font-weight: 400;
+    line-height: 24px;
+    font-size: 20px;
+    color: $white;
+    padding-left 38px
+    padding-right 0
+
+.header__tel:focus
+  filter drop-shadow(0 0 10px $white)
+
+.header__tel::before
+  content ''
+  position absolute
+  top -2px
+  left 0
+  width 22px
+  height 22px
+  background-image url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='none'%3E%3Cpath stroke='%23fff' d='M16.153 14.3293l.006.002c1.3126.4339 2.6949.654 4.1042.654.6814 0 1.2368.5554 1.2368 1.2368v4.0411c0 .6814-.5554 1.2368-1.2368 1.2368C9.3668 21.5.5 12.6332.5 1.7368.5 1.0554 1.0554.5 1.7368.5h4.0527c.6814 0 1.2368.5554 1.2368 1.2368 0 1.406.221 2.7879.655 4.1046.1413.4564.0214.9361-.3075 1.2658l-.0246.0247-.0209.0278-1.8352 2.4385-.1913.254.149.281c1.557 2.9348 3.4633 4.8394 6.415 6.4143l.2818.1503.2549-.1925 2.4976-1.8862.0294-.0222.0258-.0263c.2613-.2657.7529-.3946 1.1977-.2413z'/%3E%3C/svg%3E")
+
+  @media screen and (min-width: 1168px)
+    top 0
+
+.header__tel:hover
+  opacity 0.6
+
+.header--float
+  background rgba(0 0 0 0.5)

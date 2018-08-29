@@ -1,0 +1,139 @@
+.slider
+  width 100%
+  position relative
+
+.slider__list
+  position relative
+  margin 0
+  padding 0
+  list-style none
+  padding-top 120px
+  background $white
+  z-index 2
+  min-height 568px
+
+  @media screen and (min-width: 1168px)
+    min-height 600px
+
+.slide
+  position absolute
+  left 0
+  top 0
+  width 100%
+  height 100%
+  opacity 0
+  z-index 1
+  transition $transition
+
+  @media screen and (min-width: 1168px)
+    padding-top 136px
+
+.slide--active
+  opacity 1
+  z-index 3
+
+.slide:nth-child(1)
+  background $bg1
+
+.slide:nth-child(2)
+  background $bg2
+
+.slide:nth-child(3)
+  background $bg3
+
+.slide:nth-child(4)
+  background $bg4
+
+.slide__wrapper
+  width 100%
+  height 100%
+  margin 0 auto
+  padding 0 5%
+
+  @media screen and (min-width: 1168px)
+    width  1168px
+    padding 0 20px
+
+.slide__title
+  max-width 752px
+  font-family: $montserrat
+  font-weight: 600;
+  line-height: 40px;
+  font-size: 32px;
+  color: $white
+  margin-top 120px
+  margin-bottom 32px
+
+  @media screen and (min-width: 1168px)
+    line-height 48px
+    font-size 40px
+    margin-top: 0
+
+.slide__desc
+  line-height: 24px;
+  font-size: 16px;
+  color $white
+  margin 40px 0
+  max-width 576px
+
+  @media screen and (max-width: 1168px)
+    display none
+
+.slider__controls
+  position absolute
+  bottom 36px
+  left 8%
+  display flex
+  flex-direction row
+  z-index 4
+
+  @media screen and (min-width: 1168px)
+    display none
+
+
+.slider__control-btn
+  width 0
+  height 0
+  border-style solid
+
+
+.slider__control-btn--prev
+  border-width: 12px 20.8px 12px 0
+  border-color transparent $white transparent transparent
+  margin-right 43px
+
+.slider__control-btn--next
+    border-width: 12px 0 12px 20.8px
+    border-color: transparent transparent transparent $white;
+
+
+.slider__pagination
+  position absolute
+  display flex
+  bottom: 40px
+  left: 50%;
+  transform translateX(-50%)
+  z-index 4
+
+
+.slider__pagination-btn
+  width 8px
+  height 8px
+  border-radius 50%
+  border 1px solid $white
+  margin-left 8px
+  opacity 0.6
+  transition opacity, background  0.6s ease
+  outline none
+
+  @media screen and (max-width: 1168px)
+    display none
+
+.slider__pagination-btn:focus
+  box-shadow 0 0 5px 2px rgba(255,255,255, 0.3)
+
+.slider__pagination-btn:hover
+  opacity 1
+
+.slider__pagination-btn--active
+  background-color $white

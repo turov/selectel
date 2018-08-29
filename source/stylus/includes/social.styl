@@ -1,0 +1,45 @@
+.social
+  display flex
+  flex-direction column
+  align-items center
+  padding 32px 0 32px
+
+  @media screen and (min-width: 1168px)
+    width 1168px
+    flex-direction row
+    justify-content space-between
+    margin 0 auto
+    padding 13px 17px 13px
+
+.social__list
+  width 100%
+  max-width 420px
+  margin 0
+  padding 28px 11% 32px
+  list-style none
+  display flex
+  flex-direction row
+  justify-content space-between
+  flex-wrap wrap
+
+  @media screen and (min-width: 1168px)
+    max-width 245px
+    padding 28px 0 32px
+
+.social__link
+  text-decoration none
+  color $white
+  display flex
+  justify-content center
+  align-items center
+  width 32px
+  height 24px
+  opacity 1
+  transition $transition
+  outline none
+
+.social__link:hover
+  opacity 0.6
+
+.social__link:focus
+  filter drop-shadow(0 0 10px $white)

@@ -1,0 +1,1 @@
+"use strict";!function(){var e=document.querySelector(".header");window.onscroll=function(){window.pageYOffset>=120?e.classList.add("header--float"):window.pageYOffset<120&&e.classList.remove("header--float")}}();

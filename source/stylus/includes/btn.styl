@@ -1,0 +1,33 @@
+.btn
+  border: none
+  background transparent
+  cursor pointer
+  text-decoration none
+  text-align center
+  padding 0
+
+.btn--regular
+  display block
+  width 154px
+  background $red
+  border-radius 4px
+  font-family $montserrat
+  font-weight 500
+  line-height 24px
+  font-size 16px
+  color $white
+  padding 16px 40px
+  transition background 0.3s ease
+  outline none
+
+.btn--regular:focus
+  box-shadow 0 0 5px 2px rgba(255,0,0,1)
+
+
+.btn--regular:hover
+  background $darkRed
+
+.btn--margin-left
+
+  @media screen and (min-width: 1168px)
+    margin-left auto

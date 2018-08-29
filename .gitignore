@@ -16,4 +16,5 @@ prepros-6.config
 *.sublime*
 node_modules/
 npm-debug.*
+build/
 

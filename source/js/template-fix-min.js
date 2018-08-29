@@ -1,0 +1,1 @@
+"use strict";!function(e){if("content"in e.createElement("template"))return!1;for(var t,n,a,c=e.getElementsByTagName("template"),r=c.length,l=0;l<r;++l){for((n=(t=c[l]).childNodes).length,a=e.createDocumentFragment();n[0];)a.appendChild(n[0]);t.content=a}}(document);

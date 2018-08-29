@@ -1,0 +1,30 @@
+template {
+  display: none !important; // необходимо для ie11
+}
+
+.page
+  width 100%
+  min-width 320px
+  font-family "Roboto", Arial, sans-serif
+  overflow-x hidden
+
+html
+  box-sizing border-box
+
+*,
+*::before,
+*::after
+  box-sizing inherit
+
+.visually-hidden:not(:focus):not(:active)
+  overflow hidden
+  position absolute
+  margin -1px
+  padding 0
+  width 1px
+  height 1px
+  border 0
+  white-space nowrap
+  -webkit-clip-path inset(100%)
+  clip-path inset(100%)
+  clip rect(0 0 0 0)

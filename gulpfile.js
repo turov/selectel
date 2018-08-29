@@ -1,140 +1,103 @@
 var gulp = require('gulp');
-var stylus = require('gulp-stylus');
-var browserSync = require('browser-sync');
+var server = require('browser-sync').create();
+var plumber = require('gulp-plumber');
 var pug = require('gulp-pug');
-var notify = require("gulp-notify");
+var stylus = require('gulp-stylus');
 var autoprefixer = require('gulp-autoprefixer');
-var SourceMap = require('gulp-sourcemaps');
-var rename = require("gulp-rename");
-var uglify = require('gulp-uglify');
-var minifyCss = require('gulp-minify-css');
-var clean = require('gulp-clean');
-var htmlmin = require('gulp-html-minifier');
-var cache = require('gulp-cache');
-var gulpsync = require('gulp-sync')(gulp);
-var zip = require('gulp-zip');
-var concat = require('gulp-concat');
-var useref = require('gulp-useref');
-var gulpif = require('gulp-if');
-const imagemin = require('gulp-imagemin');
-const size = require('gulp-size');
+var rename = require('gulp-rename');
+var del = require('del');
+var cssmin = require('gulp-csso');
+var jsmin = require('gulp-minify');
+var imagemin = require('gulp-imagemin');
+var run = require('run-sequence');
 
-
-// Compile stylus,add prefixes, minify css, reload browser and notify
-gulp.task('stylus', function() {
-  return gulp.src('app/stylus/*.styl') // source folder
-    .pipe(SourceMap.init())
-    .pipe(stylus().on('error', notify.onError({
-      message: "<%= error.message %>",
-      title: "Stylus Error!"
-    }))) // error notification
-    .pipe(autoprefixer(['last 10 versions', '> 1%', 'ie 8', 'ie 7'], {
-      cascade: true
-    })) // add prefix
-    .pipe(rename('style.css'))
-    .pipe(SourceMap.write('.')) //Create source map
-    .pipe(gulp.dest('app/css')) //destination folder
-    // .pipe(browserSync.reload({
-    //   stream: true
-    // })) // browser reload styles
-    // .pipe(notify('Stylus compiled')); // uncomment this line for "success" notify
+gulp.task('html', function () {
+  gulp.src('source/pug/index.pug')
+    .pipe(plumber())
+    .pipe(pug())
+    .pipe(gulp.dest('source'))
 });
 
-// Компилируем Pug в HTML и перегружаем страницу
-gulp.task('pug', function() {
-  return gulp.src('app/pug/*.pug') // source folder
-    .pipe(pug({
-      pretty: true
-    })) //compile pug
-    .pipe(gulp.dest('app')) // destination folder
-    // .pipe(browserSync.reload({
-    //   stream: true,
-    //   once: true
-    // })) // browser refresh
+gulp.task('style', function () {
+  gulp.src('source/stylus/style.styl')
+    .pipe(plumber())
+    .pipe(stylus())
+    .pipe(autoprefixer())
+    .pipe(gulp.dest('source/css'))
+    .pipe(cssmin())
+    .pipe(rename('style.min.css'))
+    .pipe(gulp.dest("source/css"));
 });
 
-// refresh browser
-gulp.task('browser-sync', function() {
-  browserSync({
-    server: {
-      baseDir: 'app'
-    },
-    notify: false
-  })
+gulp.task('images', function () {
+  return gulp.src('source/img/**/*.{png,jpg,svg}')
+    .pipe(imagemin([
+      imagemin.optipng({optimizationLevel: 3}),
+      imagemin.jpegtran({progressive: true}),
+      imagemin.svgo()
+    ]))
+    .pipe(gulp.dest('source/img'));
 });
 
-//delete "dist" map
-gulp.task('clean', function() {
-  return gulp.src('dist', {
-      read: false
-    })
-    .pipe(clean());
+gulp.task('jsmin', function () {
+  gulp.src('source/js/*.js')
+    .pipe(jsmin())
+    .pipe(gulp.dest('source/js'))
 });
 
-
-
-//copy images to dist/img
-gulp.task('copyimages', function() {
-  return gulp.src('app/img/**/*.*')
-    .pipe(cache(imagemin()))
-    .pipe(gulp.dest('dist/img'));
+gulp.task('del-min', function () {
+  return del('source/js/*-min.js');
 });
 
-// copy fonts to dist/fonts
-gulp.task('copyfonts', function() {
-  return gulp.src('app/fonts/**/*.*')
-    .pipe(gulp.dest('dist/fonts'));
+gulp.task('pug-watch', ['html'], function (done) {
+  server.reload();
+  done();
+});
+gulp.task('stylus-watch', ['style'], function (done) {
+  server.reload();
+  done();
 });
 
-//copu html, css, js, change name and path with useref and copy to dist, all is minify
-gulp.task('copyhtml', function() {
-  return gulp.src('app/*.html')
-    .pipe(useref())
-    .pipe(htmlmin({
-      collapseWhitespace: true,
-      // preserveLineBreaks: true,
-      removeComments: true
-    }))
-    .pipe(gulpif('*.js', uglify()))
-    .pipe(gulpif('*.css', minifyCss()))
-    .pipe(gulp.dest('dist'));
-});
-
-
-// create archive for build (map "dist")
-gulp.task('zip', () =>
-  gulp.src('dist/**/*')
-  .pipe(zip('build.zip'))
-  .pipe(size({
-    showFiles: true
-  }))
-  .pipe(gulp.dest('./'))
-);
-
-//запускаем все команды чтоб прошлись по файлам, потом мониторим все изменения.
-gulp.task('default', ['stylus', 'pug', 'browser-sync'],
-  function() {
-    gulp.watch('app/stylus/**/*.styl', ['stylus-watch']); //watch stylus files
-    gulp.watch('app/pug/**/*.pug', ['pug-watch']); //watch pug files
+gulp.task('serve', ['html', 'style'], function () {
+  server.init({
+    server: 'source/'
   });
 
-//tasks for relaod page after compile pug and stylus
-gulp.task('pug-watch', ['pug'], function(done) {
-  browserSync.reload();
-  done();
-});
-gulp.task('stylus-watch', ['stylus'], function(done) {
-  browserSync.reload();
-  done();
+  gulp.watch('source/stylus/**/*.styl', ['stylus-watch']);
+  gulp.watch('source/pug/**/*.pug', ['pug-watch']);
 });
 
+gulp.task('clean', function () {
+  return del('build');
+});
 
+gulp.task("copy", function () {
+  return gulp.src([
+    'source/*.html',
+    'source/img/**',
+    'source/css/**',
+    'source/js/*.js'
+  ], {
+    base: "source"
+  })
+    .pipe(gulp.dest("build"));
+});
 
-//comppile stylus and pug
-gulp.task('compile', gulpsync.sync(['stylus', 'pug']));
+gulp.task('build', function (done) {
+  run(
+    'clean',
+    'html',
+    'style',
+    'del-min',
+    'jsmin',
+    'copy',
+    done
+  )
+  ;
+});
 
-
-// build project in "dist map"
-gulp.task('build', gulpsync.sync(['compile', 'clean', 'copyhtml', 'copyimages',
-  'copyfonts', 'zip'
-]));
+gulp.task('gh-pages', function () {b
+  gulp.src('build/**/*')
+    .pipe(plumber())
+    .pipe(gulp.dest('docs'))
+});
